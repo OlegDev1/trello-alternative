@@ -1,0 +1,64 @@
+#main > * {
+    border: 1px solid salmon;
+}
+
+/* Main layout */
+#main {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    height: 100%;
+    grid-template-areas: 
+    'nav nav'
+    'sidebar main';
+}
+#main {
+    grid-area: main;
+}
+.icon {
+    height: 1.1rem;
+}
+
+/* Nav */
+#nav {
+    grid-area: nav;
+
+    display: flex;
+    align-items: center;
+}
+.nav__name {
+    flex: 1;
+}
+.nav__account {
+    height: 36px;
+}
+
+/* Sidebar */
+#sidebar {
+    grid-area: sidebar;
+
+}
+.sidebar__currentBoard,
+.sidebar__boards-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Board */
+.board {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    display: grid;
+    grid-auto-columns: 280px;
+    grid-auto-flow: column;
+}
+.list__header {
+    display: flex;
+    align-items: center;
+}
+.list__name {
+    flex: 1;
+}
