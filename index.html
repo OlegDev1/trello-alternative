@@ -12,69 +12,77 @@
         <aside id="sidebar">
             <div class="sidebar__currentBoard">
                 <span class="sidebar__boardName">My board</span>
-                <button class="sidebar__close">C</button>
+                <button class="sidebar__close">
+                    <img class="icon" src="imgs/sidebar-close-icon.png">
+                </button>
             </div>
             <div class="sidebar__boards">
                 <header class="sidebar__boards-header">
                     <span class="header">Your boards</span>
-                    <button class="sidebar__boards-add button">Add</button>
+                    <button class="sidebar__boards-add button">
+                        <img class="icon" src="imgs/list-item-add-plus.png">
+                    </button>
                 </header>
-                <div class="board">My board</div>
+                <div class="sidebar__board current">My board</div>
             </div>
         </aside>
         <section id="board">
             <ul class="board">
-                <li class="list">
-                    <header class="list__header">
-                        <h2 class="list__name">List name</h2>
-                        <button class="list__settings">
-                            <img class="icon" src="imgs/list-settings-dots.png">
+                <li class="list-wrapper">
+                    <div class="list">
+                        <header class="list__header">
+                            <h2 class="list__name">List name</h2>
+                            <button class="list__settings">
+                                <img class="icon" src="imgs/list-settings-dots.png">
+                            </button>
+                        </header>
+                        <ol class="list__items">
+                            <li class="list__item">
+                                <span class="list__item-content">
+                                    Buy 2 bottles of water
+                                </span> 
+                                <button class="item__content-edit">
+                                    <img class="icon" src="imgs/list-item-edit-pencil.png">
+                                </button>
+                            </li>
+                            <li class="list__item">
+                                <span class="list__item-content">
+                                    Buy 2 bottles of water
+                                </span> 
+                                <button class="item__content-edit">
+                                    <img class="icon" src="imgs/list-item-edit-pencil.png">
+                                </button>
+                            </li>
+                        </ol>
+                        <button class="list__addItem">
+                            <img class="icon" src="imgs/list-item-add-plus.png">
+                            Add a card
                         </button>
-                    </header>
-                    <ol class="list__items">
-                        <li class="list__item">
-                            Buy 2 bottles of water
-                            <button class="item__content-edit">
-                                <img class="icon" src="imgs/list-item-edit-pencil.png">
-                            </button>
-                        </li>
-                        <li class="list__item">
-                            Buy 2 bottles of water
-                            <button class="item__content-edit">
-                                <img class="icon" src="imgs/list-item-edit-pencil.png">
-                            </button>
-                        </li>
-                        <li class="list__item">
-                            Buy 2 bottles of water
-                            <button class="item__content-edit">
-                                <img class="icon" src="imgs/list-item-edit-pencil.png">
-                            </button>
-                        </li>
-                    </ol>
-                    <button class="list__addItem">
-                        <img class="icon" src="imgs/list-item-add-plus.png">
-                        Add a card
-                    </button>
+                    </div>
                 </li>
-                <li class="list">
-                    <header class="list__header">
-                        <h2 class="list__name">List name</h2>
-                        <button class="list__settings">
-                            <img class="icon" src="imgs/list-settings-dots.png">
-                        </button>
-                    </header>
-                    <ol class="list__items">
-                        <li class="list__item">
-                            Buy 2 bottles of water
-                            <button class="item__content-edit">
-                                <img class="icon" src="imgs/list-item-edit-pencil.png">
+                <li class="list-wrapper">
+                    <div class="list">
+                        <header class="list__header">
+                            <h2 class="list__name">List name</h2>
+                            <button class="list__settings">
+                                <img class="icon" src="imgs/list-settings-dots.png">
                             </button>
-                        </li>
-                    </ol>
-                    <button class="list__addItem">
-                        <img class="icon" src="imgs/list-item-add-plus.png">
-                        Add a card
-                    </button>
+                        </header>
+                        <ol class="list__items">
+                            <li class="list__item">
+                                <span class="list__item-content">
+                                    Buy 2 bottles of water
+                                </span> 
+                                <button class="item__content-edit">
+                                    <img class="icon" src="imgs/list-item-edit-pencil.png">
+                                </button>
+                            </li>
+                        </ol>
+                        <button class="list__addItem">
+                            <img class="icon" src="imgs/list-item-add-plus.png">
+                            Add a card
+                        </button>
+                    </div>
                 </li>
             </ul>
         </section>
