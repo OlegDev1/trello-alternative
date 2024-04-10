@@ -2,8 +2,9 @@
 :root {
     --small-gap: 0.5rem;
     --standart-gap: 1rem;
+    --deault-border-radius: 10px;
     --board-font-size: 1rem;
-    --standart-grey: #cdcfd1
+    --standart-grey: #cdcfd1;
 }
 /* Main layout */
 body {
@@ -46,7 +47,7 @@ body {
     height: 60%;
     padding: 0 0.5rem;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--deault-border-radius);
     color: white;
     background-color: #6895dd;
 }
@@ -75,6 +76,7 @@ body {
     background: none;
     border: none;
 }
+
 /* Board */
 .board {
     height: 100%;
@@ -122,14 +124,21 @@ body {
     justify-content: space-between;
     padding: var(--small-gap);
     margin: var(--small-gap) 0;
-    border-radius: 10px;
+    border-radius: var(--deault-border-radius);
     background-color: white;
     font-size: var(--board-font-size);
+}
+.list__item-addText {
+    width: 100%;
+    height: 60px;
+    border: none;
+    outline: none;
+    resize: none
 }
 .item__content-edit {
     padding: 0.3rem;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--deault-border-radius);
     background: none;
 }
 .item__content-edit .icon {
@@ -143,11 +152,41 @@ body {
     align-items: center;
     padding: var(--small-gap);
     border: none;
-    border-radius: 10px;
+    border-radius: var(--deault-border-radius);
     gap: 0.7rem;
     width: 100%;
     font-size: var(--board-font-size);
 }
 .list__addItem:hover {
     background-color: var(--standart-grey);
+}
+.list__addItem__buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--small-gap)
+}
+.list__addItem-confirm {
+    width: 60%;
+    background-color: #2b63bd;
+    padding: var(--small-gap);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+}
+.list_addItem-cancel {
+    background: none;
+    border: none;
+}
+.list-addList {
+    width: 100%;
+    border: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: var(--deault-border-radius);
+    padding: 0.8rem;
+}
+.list-addList:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
