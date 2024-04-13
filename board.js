@@ -38,9 +38,18 @@ function addNewItemTextarea(event) {
     <button class="list_addItem-cancel"><img class="icon" src="imgs/addItem-cancel-cross.png"></button></div>`;
 
     list.querySelector(".list__item-addText").addEventListener("blur", (event) => {
+        document.removeEventListener("keydown", keyHandler)
         if (event.relatedTarget == document.querySelector(".list__addItem-confirm")) return addNewItem(list, true);
         return addNewItem(list, false);
     });
+    function keyHandler(event) {
+        if (event.code == "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.querySelector(".list__addItem-confirm").focus()
+            document.removeEventListener("keydown", keyHandler)
+        }
+    }
+    document.addEventListener("keydown", keyHandler)
 }
 
 function addNewItem(list, confirm) {
@@ -132,9 +141,19 @@ function editCardHandler(event) {
     textarea.setSelectionRange(textarea.value.length, textarea.value.length);
 
     textarea.addEventListener('blur', (event) => {
+        document.removeEventListener("keydown", keyHandler);
         if (event.relatedTarget == document.querySelector('.list__addItem-confirm.edit')) return editCardSave(textarea, text, true);
         return editCardSave(textarea, text, false);
-    })
+    });
+
+    function keyHandler(event) {
+        if (event.code == "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            document.querySelector(".list__addItem-confirm").focus()
+            document.removeEventListener("keydown", keyHandler)
+        }
+    }
+    document.addEventListener("keydown", keyHandler)
 }
 function editCardSave(textarea, previousText, confirm) {
     let listItemIndex = Array.from(textarea.closest('.list__items').parentNode.children).indexOf(textarea.closest('.list__items'));
