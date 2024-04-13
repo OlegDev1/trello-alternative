@@ -2,6 +2,7 @@
 function boardClickHandler(event) {
     if (event.target.closest(".list__addItem")) return addNewItemTextarea(event);
     if (event.target.className == "list-addList") return addNewList(event);
+    if (event.target.closest('.item__content-edit')) return editCardHandler(event)
 }
 document.querySelector(".board").addEventListener("click", boardClickHandler);
 
@@ -73,6 +74,9 @@ class List {
     addItem(item) {
         this.items.push(item);
     }
+    editItem(index, item) {
+        this.items[index] = item;
+    }
     removeItem(index) {
         this.items.splice(index, 1);
     }
@@ -111,6 +115,43 @@ function contextMenuHandler(event) {
         lists[listIndex].removeItem(listItemIndex);
     });
 }
-
-
 document.addEventListener('contextmenu', contextMenuHandler)
+
+// Edit a card
+function editCardHandler(event) {
+    let item = event.target.closest('.list__item');
+    event.target.closest('.list__items').nextElementSibling.outerHTML = `<div class="list__addItem__buttons"><button class="list__addItem-confirm edit">Save</button>
+    <button class="list_addItem-cancel edit"><img class="icon" src="imgs/addItem-cancel-cross.png"></button></div>`;
+
+    let text = item.children[0].textContent.trim()
+    item.innerHTML = '';
+    let textarea = `<textarea placeholder="Enter the data" class="list__item-addText edit">${text}</textarea>`;
+    item.insertAdjacentHTML('beforeend', textarea);
+    textarea = document.querySelector('.list__item-addText.edit');
+    textarea.focus();
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+
+    textarea.addEventListener('blur', (event) => {
+        if (event.relatedTarget == document.querySelector('.list__addItem-confirm.edit')) return editCardSave(textarea, text, true);
+        return editCardSave(textarea, text, false);
+    })
+}
+function editCardSave(textarea, previousText, confirm) {
+    let listItemIndex = Array.from(textarea.closest('.list__items').parentNode.children).indexOf(textarea.closest('.list__items'));
+    let listIndex = Array.from(textarea.closest('.list-wrapper').parentNode.children).indexOf(textarea.closest('.list-wrapper'));
+
+
+    document.querySelector('.list__addItem__buttons').outerHTML = `<button class="list__addItem">
+    <img class="icon" src="imgs/list-item-add-plus.png">
+    Add a card
+    </button>`;
+
+    textarea.closest('.list__item').innerHTML = `<span class="list__item-content">
+    ${confirm ? textarea.value : previousText}
+    </span> 
+    <button class="item__content-edit">
+    <img class="icon" src="imgs/list-item-edit-pencil.png">
+    </button>`;
+
+    lists[listIndex].editItem(listItemIndex, confirm ? textarea.value : previousText)
+}

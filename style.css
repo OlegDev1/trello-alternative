@@ -148,6 +148,9 @@ body {
     outline: none;
     resize: none
 }
+.list__item-addText.edit {
+    text-align: left;
+}
 .item__content-edit {
     padding: 0.3rem;
     border: none;
