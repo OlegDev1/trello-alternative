@@ -56,7 +56,7 @@ function addNewItemTextarea(event) {
 
 function addNewItem(list, confirm) {
     let textarea = document.querySelector(".list__item-addText");
-    if (confirm) {
+    if (confirm && textarea.value) {
         textarea.closest(".list__item").innerHTML = `<span class="list__item-content">
             ${textarea.value}
         </span> 
@@ -159,7 +159,7 @@ function editCardHandler(event) {
     document.addEventListener("keydown", keyHandler)
 }
 function editCardSave(textarea, previousText, confirm) {
-    let listItemIndex = Array.from(textarea.closest('.list__items').parentNode.children).indexOf(textarea.closest('.list__items'));
+    let listItemIndex = Array.from(textarea.closest('.list__item').parentNode.children).indexOf(textarea.closest('.list__item'));
     let listIndex = Array.from(textarea.closest('.list-wrapper').parentNode.children).indexOf(textarea.closest('.list-wrapper'));
 
 
@@ -174,7 +174,7 @@ function editCardSave(textarea, previousText, confirm) {
     <button class="item__content-edit">
     <img class="icon" src="imgs/list-item-edit-pencil.png">
     </button>`;
-    lists[listIndex].editItem(listItemIndex-1, confirm ? textarea.value : previousText)
+    lists[listIndex].editItem(listItemIndex, confirm ? textarea.value : previousText)
 }
 
 //Change list name and remove a list
