@@ -2,7 +2,9 @@
 function boardClickHandler(event) {
     if (event.target.closest(".list__addItem")) return addNewItemTextarea(event);
     if (event.target.className == "list-addList") return addNewList(event);
-    if (event.target.closest('.item__content-edit')) return editCardHandler(event)
+    if (event.target.closest('.item__content-edit')) return editCardHandler(event);
+    if (event.target.closest('.list__settings')) return listContextMenuHandler(event);
+    if (event.target.className == 'list__name') return renameList(event);
 }
 document.querySelector(".board").addEventListener("click", boardClickHandler);
 
@@ -78,6 +80,7 @@ function addNewItem(list, confirm) {
 let lists = [];
 class List {
     constructor() {
+        this.name = '';
         this.items = [];
     }
     addItem(item) {
@@ -171,6 +174,51 @@ function editCardSave(textarea, previousText, confirm) {
     <button class="item__content-edit">
     <img class="icon" src="imgs/list-item-edit-pencil.png">
     </button>`;
+    lists[listIndex].editItem(listItemIndex-1, confirm ? textarea.value : previousText)
+}
 
-    lists[listIndex].editItem(listItemIndex, confirm ? textarea.value : previousText)
+//Change list name and remove a list
+const listSettingsButton = 
+`<button class="list__settings">
+<img class="icon" src="imgs/list-settings-dots.png">
+</button>`;
+const listContextMenu = 
+`<div class="list__settings-contextMenu">
+    <h2 class="settings__contextMenu__header">Actions with the list</h2>
+    <button class="contextMenu-removeList">Remove a list</button>
+</div>`;
+
+function listContextMenuHandler(event) {
+    console.log('a')
+    let button = event.target.closest('.list__settings');
+    button.outerHTML = `<div class="settings-wrapper">${button.outerHTML} ${listContextMenu}</div>`;
+
+    document.addEventListener('mousedown', function(event) {
+        if (event.target.closest('.settings-wrapper')) return;
+        if (document.querySelector('.settings-wrapper'))
+            document.querySelector('.settings-wrapper').outerHTML = listSettingsButton;
+        event.currentTarget.removeEventListener(event.type, arguments.callee);
+    });
+
+    document.querySelector('.list__settings-contextMenu').addEventListener('click', (event) => {
+        if (event.target.closest('.contextMenu-removeList')) return removeList(event);
+    })
+}
+
+function renameList(event) {
+    let input = document.createElement('input');
+    input.className = 'list__name input';
+    input.value = event.target.textContent
+    event.target.replaceWith(input);
+    input.focus();
+    input.addEventListener('blur', function(event) {
+        let listIndex = Array.from(input.closest('.list-wrapper').parentNode.children).indexOf(input.closest('.list-wrapper'));
+        input.outerHTML = `<h2 class="list__name">${input.value}</h2>`;
+        lists[listIndex].name = input.value;
+    })
+}
+function removeList(event) {
+    let listIndex = Array.from(event.target.closest('.list-wrapper').parentNode.children).indexOf(event.target.closest('.list-wrapper'));
+    event.target.closest('.list-wrapper').remove();
+    lists.splice(listIndex, 1)
 }
