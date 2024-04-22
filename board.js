@@ -215,6 +215,9 @@ function renameList(event) {
         let listIndex = Array.from(input.closest('.list-wrapper').parentNode.children).indexOf(input.closest('.list-wrapper'));
         input.outerHTML = `<h2 class="list__name">${input.value}</h2>`;
         lists[listIndex].name = input.value;
+    });
+    input.addEventListener('keydown', function(event) {
+        if (event.code == 'Enter') input.blur();
     })
 }
 function removeList(event) {
@@ -222,3 +225,42 @@ function removeList(event) {
     event.target.closest('.list-wrapper').remove();
     lists.splice(listIndex, 1)
 }
+
+//Card drag and drop
+document.querySelector('.board').addEventListener('mousedown', function(event) {
+    let item = event.target.closest('.list__item');
+    if (!item) return;
+    let itemHeight = getComputedStyle(item).height;
+    item.style.width = getComputedStyle(item).width
+    item.classList.add('dragged');
+    
+    let shiftX = event.clientX - item.getBoundingClientRect().left;
+    let shiftY = event.clientY - item.getBoundingClientRect().top;
+    function mouseMove(event) {
+        item.style.left = event.clientX - shiftX + 'px';
+        item.style.top = event.clientY - shiftY+ 'px';
+
+        item.style.visibility ='hidden';
+        let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+        item.style.visibility = 'visible';
+        
+        if (!elemBelow.closest('.list-wrapper')) return;
+        let li = document.createElement('li');
+        li.className = 'list__item empty';
+        li.style.height = itemHeight;
+        if (document.querySelector('.list__item.empty')) 
+            document.querySelector('.list__item.empty').remove();
+
+        try {
+            elemBelow.closest('.list-wrapper').querySelector('.list__items').append(li);
+        } catch(e) {
+            // debugger
+        }
+    }
+    document.addEventListener('mousemove', mouseMove);
+
+    function mouseRelease() {
+
+    }
+    document.addEventListener('mouseup', mouseRelease);
+})
