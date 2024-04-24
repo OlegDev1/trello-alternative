@@ -6,6 +6,7 @@
     --board-font-size: 1rem;
     --standart-grey: #cdcfd1;
     --border-selected: blue;
+    --default-transition: 0.1s;
 }
 /* Main layout */
 body {
@@ -107,6 +108,7 @@ body {
     border: none;
     border-radius: 7px;
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .list__settings:hover {
     background-color: var(--standart-grey);
@@ -134,6 +136,7 @@ body {
     background: none;
     border: none;
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .contextMenu-removeList:hover {
     background-color: var(--standart-grey);
@@ -167,6 +170,7 @@ body {
     background-color: white;
     font-size: var(--board-font-size);
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .list__item:hover {
     border: 2px solid var(--border-selected)
@@ -197,6 +201,9 @@ body {
     outline: none;
     resize: none
 }
+.list__item.addText:hover {
+    border: 2px solid white;
+}
 .list__item-addText.edit {
     text-align: left;
 }
@@ -206,6 +213,7 @@ body {
     border-radius: var(--deault-border-radius);
     background: none;
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .item__content-edit .icon {
     height: 12px;
@@ -223,6 +231,7 @@ body {
     width: 100%;
     font-size: var(--board-font-size);
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .list__addItem:hover {
     background-color: var(--standart-grey);
@@ -242,11 +251,21 @@ body {
     font-weight: 500;
     font-size: 1rem;
     cursor: pointer;
+    transition: var(--default-transition);
+}
+.list__addItem-confirm:hover {
+    background-color: #21519e;
 }
 .list_addItem-cancel {
     background: none;
     border: none;
     cursor: pointer;
+    height: 30px;
+    transition: var(--default-transition);
+}
+.list_addItem-cancel:hover {
+    background-color: var(--standart-grey);
+    border-radius: 7px;
 }
 .list-addList {
     width: 100%;
@@ -256,6 +275,7 @@ body {
     border-radius: var(--deault-border-radius);
     padding: 0.8rem;
     cursor: pointer;
+    transition: var(--default-transition);
 }
 .list-addList:hover {
     background-color: rgba(255, 255, 255, 0.1);

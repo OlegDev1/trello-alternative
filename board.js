@@ -36,7 +36,7 @@ function addNewList(event) {
 // Add a card to the list
 function addNewItemTextarea(event) {
     let list = event.target.closest(".list__addItem").previousElementSibling;
-    let card = `<li class="list__item"><textarea placeholder="Enter a title for the card" class="list__item-addText"></textarea></li>`;
+    let card = `<li class="list__item addText"><textarea placeholder="Enter a title for the card" class="list__item-addText"></textarea></li>`;
     list.insertAdjacentHTML("beforeend", card);
     list.querySelector(".list__item-addText").focus();
 
@@ -61,14 +61,14 @@ function addNewItemTextarea(event) {
 function addNewItem(list, confirm) {
     let textarea = document.querySelector(".list__item-addText");
     if (confirm && textarea.value) {
-        textarea.closest(".list__item").innerHTML = `<span class="list__item-content">
+        textarea.closest(".list__item").outerHTML = `<li class="list__item"><span class="list__item-content">
             ${textarea.value}
         </span> 
         <button class="item__content-edit">
             <img class="icon" src="imgs/list-item-edit-pencil.png">
-        </button>`;
+        </button></li>`;
         let currentList = list.closest(".list-wrapper");
-        let curerntListIndex = Array.from(currentList.parentNode.children).indexOf(currentList);
+        let curerntListIndex = getHTMLItemIndex(currentList);
         lists[curerntListIndex].addItem(textarea.value);
     } else {
         textarea.closest(".list__item").remove();
@@ -101,11 +101,9 @@ class List {
 // Delete a card from the list
 function contextMenuHandler(event) {
     let listItem = event.target.closest(".list__item");
-    if (!listItem) return;
-    let listItemIndex = Array.from(listItem.parentNode.children).indexOf(listItem);
-    let listIndex = Array.from(event.target.closest(".list-wrapper").parentNode.children).indexOf(
-        event.target.closest(".list-wrapper")
-    );
+    if (!listItem || listItem.classList.contains("dragged")) return;
+    let listItemIndex = getHTMLItemIndex(listItem);
+    let listIndex = getHTMLItemIndex(event.target.closest(".list-wrapper"));
 
     event.preventDefault();
 
@@ -168,12 +166,8 @@ function editCardHandler(event) {
     document.addEventListener("keydown", keyHandler);
 }
 function editCardSave(textarea, previousText, confirm) {
-    let listItemIndex = Array.from(textarea.closest(".list__item").parentNode.children).indexOf(
-        textarea.closest(".list__item")
-    );
-    let listIndex = Array.from(textarea.closest(".list-wrapper").parentNode.children).indexOf(
-        textarea.closest(".list-wrapper")
-    );
+    let listItemIndex = getHTMLItemIndex(textarea.closest(".list__item"));
+    let listIndex = getHTMLItemIndex(textarea.closest(".list-wrapper"));
 
     document.querySelector(".list__addItem__buttons").outerHTML = `<button class="list__addItem">
     <img class="icon" src="imgs/list-item-add-plus.png">
@@ -199,7 +193,7 @@ const listContextMenu = `<div class="list__settings-contextMenu">
 </div>`;
 
 function listContextMenuHandler(event) {
-    console.log("a");
+    if (document.querySelector('.list__settings-contextMenu')) return;
     let button = event.target.closest(".list__settings");
     button.outerHTML = `<div class="settings-wrapper">${button.outerHTML} ${listContextMenu}</div>`;
 
@@ -222,9 +216,7 @@ function renameList(event) {
     event.target.replaceWith(input);
     input.focus();
     input.addEventListener("blur", function (event) {
-        let listIndex = Array.from(input.closest(".list-wrapper").parentNode.children).indexOf(
-            input.closest(".list-wrapper")
-        );
+        let listIndex = getHTMLItemIndex(input.closest(".list-wrapper"));
         input.outerHTML = `<h2 class="list__name">${input.value}</h2>`;
         lists[listIndex].name = input.value;
     });
@@ -233,9 +225,7 @@ function renameList(event) {
     });
 }
 function removeList(event) {
-    let listIndex = Array.from(event.target.closest(".list-wrapper").parentNode.children).indexOf(
-        event.target.closest(".list-wrapper")
-    );
+    let listIndex = getHTMLItemIndex(event.target.closest(".list-wrapper"));
     event.target.closest(".list-wrapper").remove();
     lists.splice(listIndex, 1);
 }
