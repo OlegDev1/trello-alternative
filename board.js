@@ -1,3 +1,7 @@
+function getHTMLItemIndex(elem) {
+    return Array.from(elem.parentNode.children).indexOf(elem)
+}
+
 //Board clicks handler
 function boardClickHandler(event) {
     if (event.target.closest(".list__addItem")) return addNewItemTextarea(event);
@@ -240,6 +244,8 @@ function removeList(event) {
 document.querySelector(".board").addEventListener("mousedown", function (event) {
     let item = event.target.closest(".list__item");
     if (!item) return;
+    const listItemIndex = getHTMLItemIndex(item);
+    const listIndex = getHTMLItemIndex(item.closest('.list-wrapper'));
     let itemHeight = getComputedStyle(item).height;
     item.style.width = getComputedStyle(item).width;
     item.classList.add("dragged");
@@ -279,6 +285,11 @@ document.querySelector(".board").addEventListener("mousedown", function (event) 
         emptyList.replaceWith(item);
         item.classList.remove("dragged");
         item.removeAttribute("style");
+
+        const curerntListIndex = getHTMLItemIndex(currentList);
+        const startingItem = lists[listIndex].items[listItemIndex];
+        lists[curerntListIndex].addItem(startingItem)
+        lists[listIndex].removeItem(listItemIndex);
 
         document.removeEventListener("mousemove", mouseMove);
         event.currentTarget.removeEventListener(event.type, arguments.callee);
