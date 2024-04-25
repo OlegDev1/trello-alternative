@@ -231,9 +231,21 @@ function removeList(event) {
 }
 
 //Card drag and drop
-document.querySelector(".board").addEventListener("mousedown", function (event) {
-    let item = event.target.closest(".list__item");
-    if (!item) return;
+document.querySelector(".board").addEventListener("mousedown", async function (event) {
+    const item = event.target.closest(".list__item");
+    const itemEditButton = event.target.closest(".item__content-edit");
+    const itemTextarea = event.target.closest(".list__item-addText");
+    if (!item || itemEditButton || itemTextarea) return;
+
+    async function dragIdentifier() {
+        let mouseMoves = 0;
+        document.addEventListener('mousemove', () => mouseMoves++);
+        await new Promise(r => setTimeout(r, 100));
+        
+        return mouseMoves < 5;
+    };
+    if (await dragIdentifier()) return;
+
     const listItemIndex = getHTMLItemIndex(item);
     const listIndex = getHTMLItemIndex(item.closest('.list-wrapper'));
     let itemHeight = getComputedStyle(item).height;

@@ -186,6 +186,7 @@ body {
     position: absolute;
     opacity: 0.85;
     transform: rotate(3deg);
+    transition: none;
 }
 .list__item.dragged:hover {
     border: 2px solid white;
@@ -201,7 +202,8 @@ body {
     outline: none;
     resize: none
 }
-.list__item.addText:hover {
+.list__item.addText:hover,
+.list__item:has(.list__item-addText.edit):hover {
     border: 2px solid white;
 }
 .list__item-addText.edit {
